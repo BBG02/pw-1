@@ -1,5 +1,7 @@
 package br.senai.sc.ti20131n.pw.introducaojpa.dao;
 
+import static org.junit.Assert.*;
+
 import javax.persistence.EntityManager;
 
 import org.junit.After;
@@ -13,6 +15,7 @@ import br.senai.sc.ti20131n.pw.introducaojpa.util.JpaUtil;
 
 public class BandaDaoTest  {
 public static EntityManager entityManager;
+ private  BandaDao dao;
 	
 	@BeforeClass
 	public static void init(){
@@ -26,10 +29,13 @@ public static EntityManager entityManager;
 		
 	}
 
+
+
   @Before
   public void begin(){
 	  entityManager = JpaUtil.getEntityManager();
 	  entityManager.getTransaction().begin();
+	  dao = new BandaDao(entityManager);
 
 	  
   }
@@ -38,6 +44,7 @@ public static EntityManager entityManager;
 	  entityManager.getTransaction().commit();
 	  entityManager.close();
 	  entityManager = null;
+	  dao=null;
 	  
   }
   @Test
@@ -48,6 +55,12 @@ public static EntityManager entityManager;
 	  
 	  BandaDao dao = new BandaDao(entityManager);
 	  dao.salvar(banda);
+  }
+  
+  @Test
+  public void buscarBandaPorId(){
+	  Banda banda = dao.buscaPorId(1L);
+	  assertNotNull(banda);
   }
   
 }

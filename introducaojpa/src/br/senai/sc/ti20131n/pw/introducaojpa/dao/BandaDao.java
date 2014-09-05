@@ -15,4 +15,10 @@ public class BandaDao {
 	public void salvar(Banda banda){
 		entityManager.persist(banda);
 	}
+
+	public Banda buscaPorId(Long id) {
+		
+		return entityManager.find(Banda.class,id);
+		
+	}
 }
